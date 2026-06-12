@@ -6,25 +6,19 @@ import { useState, type MouseEvent } from 'react';
 const playfair = Playfair_Display({ subsets: ['latin', 'cyrillic'] });
 const TELEGRAM_URL = 'tg://resolve?domain=Polehenko_vibe'; // Deep link для відкриття в додатку
 const TELEGRAM_WEB_URL = 'https://t.me/Polehenko_vibe'; // Fallback для браузера
-const TELEGRAM_ANDROID_INTENT_URL =
-  'intent://resolve?domain=Polehenko_vibe#Intent;scheme=tg;package=org.telegram.messenger;S.browser_fallback_url=https%3A%2F%2Ft.me%2FPolehenko_vibe;end';
 
 export default function Home() {
   const [showCopyNotification, setShowCopyNotification] = useState(false);
   const [attemptedRedirect, setAttemptedRedirect] = useState(false);
+  const [showAndroidHelp, setShowAndroidHelp] = useState(false);
 
   const handleButtonClick = (event: MouseEvent<HTMLAnchorElement>) => {
     setAttemptedRedirect(true);
 
     if (/Android/i.test(navigator.userAgent)) {
       event.preventDefault();
-      window.location.href = TELEGRAM_ANDROID_INTENT_URL;
-
-      setTimeout(() => {
-        if (!document.hidden) {
-          window.location.href = TELEGRAM_WEB_URL;
-        }
-      }, 1200);
+      setShowAndroidHelp(true);
+      handleCopyLink();
     }
   };
 
@@ -120,11 +114,11 @@ export default function Home() {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="font-bold">2️⃣</span>
-                  <span><strong>Android:</strong> просто натисніть посилання</span>
+                  <span><strong>Android:</strong> натисніть посилання, воно скопіюється</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="font-bold">3️⃣</span>
-                  <span>Якщо з'явиться меню, виберіть <strong>"VIEW IN TELEGRAM"</strong></span>
+                  <span>Відкрийте через меню TikTok або вставте в Chrome</span>
                 </li>
               </ol>
             </div>
@@ -162,10 +156,12 @@ export default function Home() {
         {attemptedRedirect && (
           <div className="text-center bg-black/50 backdrop-blur-md rounded-2xl p-6 mt-8 border-2 border-red-500 animate-fadeIn">
             <p className="text-red-500 text-lg sm:text-xl font-bold mb-4">
-              ⚠️ TikTok блокує прямі переходи!
+              {showAndroidHelp ? '⚠️ Android TikTok блокує прямий перехід!' : '⚠️ TikTok блокує прямі переходи!'}
             </p>
             <p className="text-white/90 text-base sm:text-lg mb-4">
-              Використовуйте один із способів вище 👆
+              {showAndroidHelp
+                ? 'Посилання скопійовано. Натисніть ⋯ зверху та відкрийте в браузері, або вставте посилання в Chrome.'
+                : 'Використовуйте один із способів вище 👆'}
             </p>
           </div>
         )}
