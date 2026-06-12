@@ -7,7 +7,7 @@ const playfair = Playfair_Display({ subsets: ['latin', 'cyrillic'] });
 const TELEGRAM_URL = 'https://t.me/Polehenko_vibe';
 
 export default function Home() {
-  const [countdown, setCountdown] = useState(2);
+  const [countdown, setCountdown] = useState(1);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -42,11 +42,11 @@ export default function Home() {
         <div className="flex justify-center mb-8">
           <button
             onClick={handleRedirect}
-            className="group relative inline-flex items-center justify-center gap-3 sm:gap-4 bg-[#0088cc] hover:bg-[#0077b3] text-white font-bold py-5 px-10 sm:py-7 sm:px-14 rounded-full shadow-2xl transition-all duration-300 hover:shadow-3xl hover:scale-105 z-50 cursor-pointer active:scale-95 animate-pulse"
+            className="group relative inline-flex items-center justify-center gap-4 sm:gap-6 bg-[#0088cc] hover:bg-[#0077b3] text-white font-bold py-6 px-12 sm:py-8 sm:px-20 rounded-full shadow-2xl transition-all duration-300 hover:shadow-3xl hover:scale-105 z-50 cursor-pointer active:scale-95 animate-pulse"
           >
             <svg
-              width="32"
-              height="32"
+              width="40"
+              height="40"
               viewBox="0 0 24 24"
               fill="currentColor"
               xmlns="http://www.w3.org/2000/svg"
@@ -54,12 +54,12 @@ export default function Home() {
             >
               <path d="M20.665 3.717l-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l.002.001-.314 4.692c.46 0 .663-.211.921-.46l2.211-2.15 4.599 3.397c.848.467 1.457.227 1.668-.785l3.019-14.228c.309-1.239-.473-1.8-1.282-1.434z"/>
             </svg>
-            <span className="text-lg sm:text-xl">👉 Перейти в Телеграм 👈</span>
+            <span className="text-xl sm:text-2xl">👉 Перейти в Телеграм 👈</span>
           </button>
         </div>
 
         <div className="text-center">
-          <p className="text-white drop-shadow-lg text-base sm:text-lg font-semibold mb-2">
+          <p className="text-white drop-shadow-lg text-lg sm:text-xl font-semibold mb-2">
             ⏰ Автоматичний перехід через {countdown} секунд...
           </p>
         </div>
