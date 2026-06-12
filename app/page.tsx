@@ -4,16 +4,26 @@ import { Playfair_Display } from 'next/font/google';
 import { useEffect, useState } from 'react';
 
 const playfair = Playfair_Display({ subsets: ['latin', 'cyrillic'] });
-const TELEGRAM_URL = 'https://t.me/Polehenko_vibe';
+const TELEGRAM_URL = 'tg://resolve?domain=Polehenko_vibe'; // Deep link to open Telegram app directly
+const TELEGRAM_WEB_URL = 'https://t.me/Polehenko_vibe'; // Fallback for web
 
 export default function Home() {
   const [countdown, setCountdown] = useState(1);
+
+  const redirectToTelegram = () => {
+    // Try to open Telegram app first with deep link
+    window.location.href = TELEGRAM_URL;
+    // Fallback to web version after a short delay if app doesn't open
+    setTimeout(() => {
+      window.location.replace(TELEGRAM_WEB_URL);
+    }, 1500);
+  };
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCountdown((prev) => {
         if (prev <= 1) {
-          window.location.replace(TELEGRAM_URL);
+          redirectToTelegram();
           return 0;
         }
         return prev - 1;
@@ -24,17 +34,17 @@ export default function Home() {
   }, []);
 
   const handleRedirect = () => {
-    window.location.replace(TELEGRAM_URL);
+    redirectToTelegram();
   };
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center py-8 px-4 sm:px-6 lg:px-8 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: 'url(/home_images.png)' }}>
       {/* Fallback for no-JS */}
       <noscript>
-        <meta httpEquiv="refresh" content={`1;url=${TELEGRAM_URL}`} />
+        <meta httpEquiv="refresh" content={`1;url=${TELEGRAM_WEB_URL}`} />
         <div className="text-center text-white">
           <p className="text-2xl mb-4">Перенаправлення...</p>
-          <a href={TELEGRAM_URL} className="text-blue-300 underline text-xl">
+          <a href={TELEGRAM_WEB_URL} className="text-blue-300 underline text-xl">
             Якщо не перенаправило — натисни сюди
           </a>
         </div>
