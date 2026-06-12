@@ -4,13 +4,12 @@ import { Playfair_Display } from 'next/font/google';
 import { useEffect, useState } from 'react';
 
 const playfair = Playfair_Display({ subsets: ['latin', 'cyrillic'] });
-const TELEGRAM_URL = 'https://t.me/Polehenko_vibe'; // Link to Telegram channel
+const TELEGRAM_URL = 'https://t.me/Polehenko_vibe';
 
 export default function Home() {
-  const [countdown, setCountdown] = useState(2); // 2 seconds countdown
+  const [countdown, setCountdown] = useState(2);
 
   useEffect(() => {
-    // Auto-redirect after 2 seconds
     const timer = setInterval(() => {
       setCountdown((prev) => {
         if (prev <= 1) {
@@ -18,7 +17,7 @@ export default function Home() {
           return 0;
         }
         return prev - 1;
-      };
+      });
     }, 1000);
 
     return () => clearInterval(timer);
@@ -40,13 +39,11 @@ export default function Home() {
           </h2>
         </div>
 
-        {/* Big animated button */}
         <div className="flex justify-center mb-8">
           <button
             onClick={handleRedirect}
             className="group relative inline-flex items-center justify-center gap-3 sm:gap-4 bg-[#0088cc] hover:bg-[#0077b3] text-white font-bold py-5 px-10 sm:py-7 sm:px-14 rounded-full shadow-2xl transition-all duration-300 hover:shadow-3xl hover:scale-105 z-50 cursor-pointer active:scale-95 animate-pulse"
           >
-            {/* Telegram icon */}
             <svg
               width="32"
               height="32"
@@ -61,11 +58,10 @@ export default function Home() {
           </button>
         </div>
 
-        {/* Countdown timer */}
         <div className="text-center">
           <p className="text-white drop-shadow-lg text-base sm:text-lg font-semibold mb-2">
-          ⏰ Автоматичний перехід через {countdown} секунд...
-        </p>
+            ⏰ Автоматичний перехід через {countdown} секунд...
+          </p>
         </div>
         
         <p className="text-center text-white/80 text-sm sm:text-base mt-2">
