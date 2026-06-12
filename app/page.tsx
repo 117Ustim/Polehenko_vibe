@@ -11,16 +11,8 @@ export default function Home() {
   const [showCopyNotification, setShowCopyNotification] = useState(false);
   const [attemptedRedirect, setAttemptedRedirect] = useState(false);
 
-  const handleTelegramRedirect = () => {
+  const handleButtonClick = () => {
     setAttemptedRedirect(true);
-    
-    // Спроба відкрити через Deep Link (додаток Telegram)
-    window.location.href = TELEGRAM_URL;
-    
-    // Якщо через 1.5 сек додаток не відкрився — fallback на веб-версію
-    setTimeout(() => {
-      window.location.href = TELEGRAM_WEB_URL;
-    }, 1500);
   };
 
   const handleCopyLink = async () => {
@@ -90,8 +82,9 @@ export default function Home() {
 
         {/* Основна кнопка переходу */}
         <div className="flex flex-col items-center gap-6 mb-8">
-          <button
-            onClick={handleTelegramRedirect}
+          <a
+            href={TELEGRAM_WEB_URL}
+            onClick={handleButtonClick}
             className="group relative inline-flex items-center justify-center gap-4 sm:gap-6 bg-[#0088cc] hover:bg-[#0077b3] text-white font-bold py-6 px-12 sm:py-8 sm:px-20 rounded-full shadow-2xl transition-all duration-300 hover:shadow-3xl hover:scale-105 z-50 cursor-pointer active:scale-95"
           >
             <svg
@@ -105,7 +98,7 @@ export default function Home() {
               <path d="M20.665 3.717l-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l.002.001-.314 4.692c.46 0 .663-.211.921-.46l2.211-2.15 4.599 3.397c.848.467 1.457.227 1.668-.785l3.019-14.228c.309-1.239-.473-1.8-1.282-1.434z"/>
             </svg>
             <span className="text-xl sm:text-2xl">👉 Перейти в Телеграм 👈</span>
-          </button>
+          </a>
 
           {/* Додаткова кнопка — копіювання посилання */}
           <div className="text-center">
