@@ -82,7 +82,7 @@ export default function Home() {
 
         {/* Основна кнопка переходу — тепер текстова ссылка */}
         <div className="flex flex-col items-center gap-6 mb-8">
-          <div className="text-center bg-white/10 backdrop-blur-md rounded-3xl p-8 sm:p-12 border-4 border-[#0088cc] shadow-2xl">
+          <div className="text-center rounded-3xl p-8 sm:p-12 border-4 border-[#0088cc] shadow-2xl">
             <div className="flex items-center justify-center gap-4 mb-6">
               <svg
                 width="50"
@@ -123,7 +123,7 @@ export default function Home() {
 
           {/* Додаткова кнопка — копіювання посилання */}
           <div className="text-center">
-            <p className="text-black bg-white/90 backdrop-blur-sm drop-shadow-lg text-base sm:text-lg mb-3 font-semibold px-6 py-3 rounded-xl inline-block">
+            <p className="text-black drop-shadow-lg text-base sm:text-lg mb-3 font-semibold">
               ❌ Не спрацювало? Спробуйте цей спосіб:
             </p>
             <button
@@ -135,7 +135,7 @@ export default function Home() {
               </svg>
               <span className="text-lg sm:text-xl">📋 Скопіювати посилання</span>
             </button>
-            <p className="text-black bg-white/90 backdrop-blur-sm text-sm mt-3 px-4 py-2 rounded-lg inline-block">
+            <p className="text-black text-sm mt-3">
               (Потім вставте в Safari або Chrome)
             </p>
           </div>
@@ -153,7 +153,7 @@ export default function Home() {
           </div>
         )}
         
-        <p className="text-center text-white/80 text-sm sm:text-base mt-6">
+        <p className="text-center text-red-500 text-sm sm:text-base mt-6 font-semibold drop-shadow-lg">
           💫 TikTok вимагає додаткові кроки для переходу в Telegram
         </p>
       </div>
