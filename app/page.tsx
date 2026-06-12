@@ -4,7 +4,7 @@ import { Playfair_Display } from 'next/font/google';
 import { useEffect, useState } from 'react';
 
 const playfair = Playfair_Display({ subsets: ['latin', 'cyrillic'] });
-const TELEGRAM_URL = 'https://t.me/Polehenko_vibe';
+const TELEGRAM_URL = 'https://t.me/Polehenko_vibe'; // Link to Telegram channel
 
 export default function Home() {
   const [countdown, setCountdown] = useState(2); // 2 seconds countdown
