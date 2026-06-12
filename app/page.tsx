@@ -1,51 +1,79 @@
 'use client';
 
 import { Playfair_Display } from 'next/font/google';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const playfair = Playfair_Display({ subsets: ['latin', 'cyrillic'] });
-const TELEGRAM_URL = 'tg://resolve?domain=Polehenko_vibe'; // Deep link to open Telegram app directly
-const TELEGRAM_WEB_URL = 'https://t.me/Polehenko_vibe'; // Fallback for web
+const TELEGRAM_URL = 'tg://resolve?domain=Polehenko_vibe'; // Deep link для відкриття в додатку
+const TELEGRAM_WEB_URL = 'https://t.me/Polehenko_vibe'; // Fallback для браузера
 
 export default function Home() {
-  const [countdown, setCountdown] = useState(1);
+  const [showCopyNotification, setShowCopyNotification] = useState(false);
+  const [attemptedRedirect, setAttemptedRedirect] = useState(false);
 
-  const redirectToTelegram = () => {
-    // Try to open Telegram app first with deep link
+  const handleTelegramRedirect = () => {
+    setAttemptedRedirect(true);
+    
+    // Спроба відкрити через Deep Link (додаток Telegram)
     window.location.href = TELEGRAM_URL;
-    // Fallback to web version after a short delay if app doesn't open
+    
+    // Якщо через 1.5 сек додаток не відкрився — fallback на веб-версію
     setTimeout(() => {
-      window.location.replace(TELEGRAM_WEB_URL);
+      window.location.href = TELEGRAM_WEB_URL;
     }, 1500);
   };
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCountdown((prev) => {
-        if (prev <= 1) {
-          redirectToTelegram();
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  const handleRedirect = () => {
-    redirectToTelegram();
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(TELEGRAM_WEB_URL);
+      setShowCopyNotification(true);
+      
+      // Ховаємо повідомлення через 3 секунди
+      setTimeout(() => {
+        setShowCopyNotification(false);
+      }, 3000);
+    } catch (err) {
+      // Fallback для старих браузерів
+      const textArea = document.createElement('textarea');
+      textArea.value = TELEGRAM_WEB_URL;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      
+      try {
+        document.execCommand('copy');
+        setShowCopyNotification(true);
+        setTimeout(() => setShowCopyNotification(false), 3000);
+      } catch (err) {
+        alert('Посилання: ' + TELEGRAM_WEB_URL);
+      }
+      
+      document.body.removeChild(textArea);
+    }
   };
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center py-8 px-4 sm:px-6 lg:px-8 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: 'url(/home_images.png)' }}>
+    <main className="min-h-screen flex flex-col items-center justify-center py-8 px-4 sm:px-6 lg:px-8 bg-cover bg-center bg-no-repeat relative" style={{ backgroundImage: 'url(/home_images.png)' }}>
+      {/* Toast повідомлення про копіювання */}
+      {showCopyNotification && (
+        <div className="fixed top-8 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-8 py-4 rounded-lg shadow-2xl z-[100] animate-slideDown">
+          <div className="flex items-center gap-3">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+            <span className="font-semibold text-lg">Посилання скопійовано! ✅</span>
+          </div>
+        </div>
+      )}
+
       {/* Fallback for no-JS */}
       <noscript>
-        <meta httpEquiv="refresh" content={`1;url=${TELEGRAM_WEB_URL}`} />
-        <div className="text-center text-white">
-          <p className="text-2xl mb-4">Перенаправлення...</p>
-          <a href={TELEGRAM_WEB_URL} className="text-blue-300 underline text-xl">
-            Якщо не перенаправило — натисни сюди
+        <div className="text-center text-white bg-black/60 p-8 rounded-xl">
+          <p className="text-2xl mb-4">Для роботи сайту потрібен JavaScript</p>
+          <a href={TELEGRAM_WEB_URL} className="text-blue-300 underline text-xl hover:text-blue-200">
+            Або перейдіть за посиланням вручну
           </a>
         </div>
       </noscript>
@@ -60,10 +88,11 @@ export default function Home() {
           </h2>
         </div>
 
-        <div className="flex justify-center mb-8">
+        {/* Основна кнопка переходу */}
+        <div className="flex flex-col items-center gap-6 mb-8">
           <button
-            onClick={handleRedirect}
-            className="group relative inline-flex items-center justify-center gap-4 sm:gap-6 bg-[#0088cc] hover:bg-[#0077b3] text-white font-bold py-6 px-12 sm:py-8 sm:px-20 rounded-full shadow-2xl transition-all duration-300 hover:shadow-3xl hover:scale-105 z-50 cursor-pointer active:scale-95 animate-pulse"
+            onClick={handleTelegramRedirect}
+            className="group relative inline-flex items-center justify-center gap-4 sm:gap-6 bg-[#0088cc] hover:bg-[#0077b3] text-white font-bold py-6 px-12 sm:py-8 sm:px-20 rounded-full shadow-2xl transition-all duration-300 hover:shadow-3xl hover:scale-105 z-50 cursor-pointer active:scale-95"
           >
             <svg
               width="40"
@@ -71,22 +100,55 @@ export default function Home() {
               viewBox="0 0 24 24"
               fill="currentColor"
               xmlns="http://www.w3.org/2000/svg"
-              className="animate-bounce"
+              className="group-hover:rotate-12 transition-transform duration-300"
             >
               <path d="M20.665 3.717l-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l.002.001-.314 4.692c.46 0 .663-.211.921-.46l2.211-2.15 4.599 3.397c.848.467 1.457.227 1.668-.785l3.019-14.228c.309-1.239-.473-1.8-1.282-1.434z"/>
             </svg>
             <span className="text-xl sm:text-2xl">👉 Перейти в Телеграм 👈</span>
           </button>
+
+          {/* Додаткова кнопка — копіювання посилання */}
+          <div className="text-center">
+            <p className="text-white/90 drop-shadow-lg text-base sm:text-lg mb-3">
+              Не відкривається? 🤔
+            </p>
+            <button
+              onClick={handleCopyLink}
+              className="inline-flex items-center gap-3 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white font-semibold py-3 px-8 rounded-full border-2 border-white/40 shadow-xl transition-all duration-300 hover:scale-105 active:scale-95"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+              <span className="text-base sm:text-lg">Скопіювати посилання</span>
+            </button>
+          </div>
         </div>
 
-        <div className="text-center">
-          <p className="text-white drop-shadow-lg text-lg sm:text-xl font-semibold mb-2">
-            ⏰ Автоматичний перехід через {countdown} секунд...
-          </p>
-        </div>
+        {/* Інструкція (показується після спроби редиректу) */}
+        {attemptedRedirect && (
+          <div className="text-center bg-black/40 backdrop-blur-md rounded-2xl p-6 mt-8 border border-white/20 animate-fadeIn">
+            <p className="text-white text-lg sm:text-xl font-semibold mb-4">
+              📱 Якщо Telegram не відкрився автоматично:
+            </p>
+            <ol className="text-white/90 text-left max-w-md mx-auto space-y-3 text-base sm:text-lg">
+              <li className="flex items-start gap-3">
+                <span className="font-bold text-[#0088cc] text-xl">1.</span>
+                <span>Скопіюйте посилання кнопкою вище ☝️</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="font-bold text-[#0088cc] text-xl">2.</span>
+                <span>Вставте його в браузер Safari/Chrome</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="font-bold text-[#0088cc] text-xl">3.</span>
+                <span>Або відкрийте Telegram вручну та знайдіть: <span className="font-mono bg-white/20 px-2 py-1 rounded">@Polehenko_vibe</span></span>
+              </li>
+            </ol>
+          </div>
+        )}
         
-        <p className="text-center text-white/80 text-sm sm:text-base mt-2">
-          (якщо не хочете чекати — натисніть на кнопку вище!)
+        <p className="text-center text-white/80 text-sm sm:text-base mt-6">
+          💫 Натисніть на велику кнопку, щоб приєднатися до каналу!
         </p>
       </div>
     </main>
