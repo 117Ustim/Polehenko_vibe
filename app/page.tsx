@@ -107,7 +107,7 @@ export default function Home() {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="font-bold">2️⃣</span>
-                  <span>Виберіть <strong>"Открыть ссылку"</strong> в меню</span>
+                  <span>Виберіть <strong>"VIEW IN TELEGRAM"</strong> в меню</span>
                 </li>
               </ol>
             </div>
@@ -123,7 +123,7 @@ export default function Home() {
 
           {/* Додаткова кнопка — копіювання посилання */}
           <div className="text-center">
-            <p className="text-white/90 drop-shadow-lg text-base sm:text-lg mb-3 font-semibold">
+            <p className="text-black bg-white/90 backdrop-blur-sm drop-shadow-lg text-base sm:text-lg mb-3 font-semibold px-6 py-3 rounded-xl inline-block">
               ❌ Не спрацювало? Спробуйте цей спосіб:
             </p>
             <button
@@ -135,7 +135,7 @@ export default function Home() {
               </svg>
               <span className="text-lg sm:text-xl">📋 Скопіювати посилання</span>
             </button>
-            <p className="text-white/80 text-sm mt-3">
+            <p className="text-black bg-white/90 backdrop-blur-sm text-sm mt-3 px-4 py-2 rounded-lg inline-block">
               (Потім вставте в Safari або Chrome)
             </p>
           </div>
@@ -143,8 +143,8 @@ export default function Home() {
 
         {/* Інструкція (показується після спроби редиректу) */}
         {attemptedRedirect && (
-          <div className="text-center bg-black/50 backdrop-blur-md rounded-2xl p-6 mt-8 border-2 border-yellow-400 animate-fadeIn">
-            <p className="text-yellow-400 text-lg sm:text-xl font-bold mb-4">
+          <div className="text-center bg-black/50 backdrop-blur-md rounded-2xl p-6 mt-8 border-2 border-red-500 animate-fadeIn">
+            <p className="text-red-500 text-lg sm:text-xl font-bold mb-4">
               ⚠️ TikTok блокує прямі переходи!
             </p>
             <p className="text-white/90 text-base sm:text-lg mb-4">
