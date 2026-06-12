@@ -1,18 +1,31 @@
 'use client';
 
 import { Playfair_Display } from 'next/font/google';
-import { useState } from 'react';
+import { useState, type MouseEvent } from 'react';
 
 const playfair = Playfair_Display({ subsets: ['latin', 'cyrillic'] });
 const TELEGRAM_URL = 'tg://resolve?domain=Polehenko_vibe'; // Deep link для відкриття в додатку
 const TELEGRAM_WEB_URL = 'https://t.me/Polehenko_vibe'; // Fallback для браузера
+const TELEGRAM_ANDROID_INTENT_URL =
+  'intent://resolve?domain=Polehenko_vibe#Intent;scheme=tg;package=org.telegram.messenger;S.browser_fallback_url=https%3A%2F%2Ft.me%2FPolehenko_vibe;end';
 
 export default function Home() {
   const [showCopyNotification, setShowCopyNotification] = useState(false);
   const [attemptedRedirect, setAttemptedRedirect] = useState(false);
 
-  const handleButtonClick = () => {
+  const handleButtonClick = (event: MouseEvent<HTMLAnchorElement>) => {
     setAttemptedRedirect(true);
+
+    if (/Android/i.test(navigator.userAgent)) {
+      event.preventDefault();
+      window.location.href = TELEGRAM_ANDROID_INTENT_URL;
+
+      setTimeout(() => {
+        if (!document.hidden) {
+          window.location.href = TELEGRAM_WEB_URL;
+        }
+      }, 1200);
+    }
   };
 
   const handleCopyLink = async () => {
@@ -103,11 +116,15 @@ export default function Home() {
               <ol className="text-left space-y-2 text-base sm:text-lg">
                 <li className="flex items-start gap-2">
                   <span className="font-bold">1️⃣</span>
-                  <span><strong>Натисніть та утримуйте</strong> посилання нижче</span>
+                  <span><strong>iPhone:</strong> натисніть та утримуйте посилання</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="font-bold">2️⃣</span>
-                  <span>Виберіть <strong>"VIEW IN TELEGRAM"</strong> в меню</span>
+                  <span><strong>Android:</strong> просто натисніть посилання</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="font-bold">3️⃣</span>
+                  <span>Якщо з'явиться меню, виберіть <strong>"VIEW IN TELEGRAM"</strong></span>
                 </li>
               </ol>
             </div>
