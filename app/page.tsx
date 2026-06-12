@@ -94,9 +94,24 @@ export default function Home() {
                 <path d="M20.665 3.717l-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l.002.001-.314 4.692c.46 0 .663-.211.921-.46l2.211-2.15 4.599 3.397c.848.467 1.457.227 1.668-.785l3.019-14.228c.309-1.239-.473-1.8-1.282-1.434z"/>
               </svg>
             </div>
-            <p className="text-white text-xl sm:text-2xl font-semibold mb-4">
-              👉 Натисніть на посилання нижче:
-            </p>
+            
+            {/* Анімована інструкція */}
+            <div className="mb-6 bg-yellow-400 text-gray-900 px-6 py-4 rounded-xl shadow-lg animate-pulse">
+              <p className="font-bold text-lg sm:text-xl mb-2">
+                ✋ Як перейти в Telegram:
+              </p>
+              <ol className="text-left space-y-2 text-base sm:text-lg">
+                <li className="flex items-start gap-2">
+                  <span className="font-bold">1️⃣</span>
+                  <span><strong>Натисніть та утримуйте</strong> посилання нижче</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="font-bold">2️⃣</span>
+                  <span>Виберіть <strong>"Открыть ссылку"</strong> в меню</span>
+                </li>
+              </ol>
+            </div>
+
             <a
               href={TELEGRAM_WEB_URL}
               onClick={handleButtonClick}
@@ -108,46 +123,38 @@ export default function Home() {
 
           {/* Додаткова кнопка — копіювання посилання */}
           <div className="text-center">
-            <p className="text-white/90 drop-shadow-lg text-base sm:text-lg mb-3">
-              Посилання не працює? 🤔
+            <p className="text-white/90 drop-shadow-lg text-base sm:text-lg mb-3 font-semibold">
+              ❌ Не спрацювало? Спробуйте цей спосіб:
             </p>
             <button
               onClick={handleCopyLink}
-              className="inline-flex items-center gap-3 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white font-semibold py-3 px-8 rounded-full border-2 border-white/40 shadow-xl transition-all duration-300 hover:scale-105 active:scale-95"
+              className="inline-flex items-center gap-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-4 px-10 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95 border-2 border-white"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
               </svg>
-              <span className="text-base sm:text-lg">Скопіювати посилання</span>
+              <span className="text-lg sm:text-xl">📋 Скопіювати посилання</span>
             </button>
+            <p className="text-white/80 text-sm mt-3">
+              (Потім вставте в Safari або Chrome)
+            </p>
           </div>
         </div>
 
         {/* Інструкція (показується після спроби редиректу) */}
         {attemptedRedirect && (
-          <div className="text-center bg-black/40 backdrop-blur-md rounded-2xl p-6 mt-8 border border-white/20 animate-fadeIn">
-            <p className="text-white text-lg sm:text-xl font-semibold mb-4">
-              📱 Якщо Telegram не відкрився автоматично:
+          <div className="text-center bg-black/50 backdrop-blur-md rounded-2xl p-6 mt-8 border-2 border-yellow-400 animate-fadeIn">
+            <p className="text-yellow-400 text-lg sm:text-xl font-bold mb-4">
+              ⚠️ TikTok блокує прямі переходи!
             </p>
-            <ol className="text-white/90 text-left max-w-md mx-auto space-y-3 text-base sm:text-lg">
-              <li className="flex items-start gap-3">
-                <span className="font-bold text-[#0088cc] text-xl">1.</span>
-                <span>Скопіюйте посилання кнопкою вище ☝️</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="font-bold text-[#0088cc] text-xl">2.</span>
-                <span>Вставте його в браузер Safari/Chrome</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="font-bold text-[#0088cc] text-xl">3.</span>
-                <span>Або відкрийте Telegram вручну та знайдіть: <span className="font-mono bg-white/20 px-2 py-1 rounded">@Polehenko_vibe</span></span>
-              </li>
-            </ol>
+            <p className="text-white/90 text-base sm:text-lg mb-4">
+              Використовуйте один із способів вище 👆
+            </p>
           </div>
         )}
         
         <p className="text-center text-white/80 text-sm sm:text-base mt-6">
-          💫 Натисніть на велику кнопку, щоб приєднатися до каналу!
+          💫 TikTok вимагає додаткові кроки для переходу в Telegram
         </p>
       </div>
     </main>
