@@ -80,30 +80,36 @@ export default function Home() {
           </h2>
         </div>
 
-        {/* Основна кнопка переходу */}
+        {/* Основна кнопка переходу — тепер текстова ссылка */}
         <div className="flex flex-col items-center gap-6 mb-8">
-          <a
-            href={TELEGRAM_WEB_URL}
-            onClick={handleButtonClick}
-            className="group relative inline-flex items-center justify-center gap-4 sm:gap-6 bg-[#0088cc] hover:bg-[#0077b3] text-white font-bold py-6 px-12 sm:py-8 sm:px-20 rounded-full shadow-2xl transition-all duration-300 hover:shadow-3xl hover:scale-105 z-50 cursor-pointer active:scale-95"
-          >
-            <svg
-              width="40"
-              height="40"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-              className="group-hover:rotate-12 transition-transform duration-300"
+          <div className="text-center bg-white/10 backdrop-blur-md rounded-3xl p-8 sm:p-12 border-4 border-[#0088cc] shadow-2xl">
+            <div className="flex items-center justify-center gap-4 mb-6">
+              <svg
+                width="50"
+                height="50"
+                viewBox="0 0 24 24"
+                fill="#0088cc"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M20.665 3.717l-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l.002.001-.314 4.692c.46 0 .663-.211.921-.46l2.211-2.15 4.599 3.397c.848.467 1.457.227 1.668-.785l3.019-14.228c.309-1.239-.473-1.8-1.282-1.434z"/>
+              </svg>
+            </div>
+            <p className="text-white text-xl sm:text-2xl font-semibold mb-4">
+              👉 Натисніть на посилання нижче:
+            </p>
+            <a
+              href={TELEGRAM_WEB_URL}
+              onClick={handleButtonClick}
+              className="inline-block text-[#0088cc] bg-white font-bold text-2xl sm:text-3xl lg:text-4xl px-6 py-4 rounded-xl hover:bg-gray-100 transition-all duration-300 hover:scale-105 active:scale-95 underline decoration-4 underline-offset-8"
             >
-              <path d="M20.665 3.717l-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l.002.001-.314 4.692c.46 0 .663-.211.921-.46l2.211-2.15 4.599 3.397c.848.467 1.457.227 1.668-.785l3.019-14.228c.309-1.239-.473-1.8-1.282-1.434z"/>
-            </svg>
-            <span className="text-xl sm:text-2xl">👉 Перейти в Телеграм 👈</span>
-          </a>
+              t.me/Polehenko_vibe
+            </a>
+          </div>
 
           {/* Додаткова кнопка — копіювання посилання */}
           <div className="text-center">
             <p className="text-white/90 drop-shadow-lg text-base sm:text-lg mb-3">
-              Не відкривається? 🤔
+              Посилання не працює? 🤔
             </p>
             <button
               onClick={handleCopyLink}
