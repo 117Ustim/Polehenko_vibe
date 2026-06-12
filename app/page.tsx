@@ -13,7 +13,7 @@ export default function Home() {
     const timer = setInterval(() => {
       setCountdown((prev) => {
         if (prev <= 1) {
-          window.location.href = TELEGRAM_URL;
+          window.location.replace(TELEGRAM_URL);
           return 0;
         }
         return prev - 1;
@@ -24,11 +24,22 @@ export default function Home() {
   }, []);
 
   const handleRedirect = () => {
-    window.location.href = TELEGRAM_URL;
+    window.location.replace(TELEGRAM_URL);
   };
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center py-8 px-4 sm:px-6 lg:px-8 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: 'url(/home_images.png)' }}>
+      {/* Fallback for no-JS */}
+      <noscript>
+        <meta httpEquiv="refresh" content={`1;url=${TELEGRAM_URL}`} />
+        <div className="text-center text-white">
+          <p className="text-2xl mb-4">Перенаправлення...</p>
+          <a href={TELEGRAM_URL} className="text-blue-300 underline text-xl">
+            Якщо не перенаправило — натисни сюди
+          </a>
+        </div>
+      </noscript>
+
       <div className="max-w-7xl mx-auto relative z-10 w-full">
         <div className="text-center space-y-4 sm:space-y-6 mb-8 sm:mb-12">
           <h1 className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white drop-shadow-2xl ${playfair.className}`}>
